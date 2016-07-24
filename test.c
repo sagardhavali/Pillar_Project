@@ -14,9 +14,7 @@ int ind=0;
 
 int main(int argc, char *argv[])
 {
-	int opt=0, count=0; 
-	int len[argc-1];
-	int val[argc-1];
+	int opt=0, len1=0, len2=0;
 	int val1=0, val2=0;
 	int result=0;	
 	
@@ -43,24 +41,22 @@ int main(int argc, char *argv[])
 		return -1;
 	} 
 	
-	for(count=0;count<argc-1;count++)
-	{
-		len[count] = strlen(argv[count+1]);
-		val[count] = roman2integer(argv[count+1],len[count]);	
-	}	
+	len1 = strlen(argv[1]);
+	len2 = strlen(argv[2]);
+
+	val1 = roman2integer(argv[1],len1);
+	val2 = roman2integer(argv[2],len2);
+	//printf("Integer Value1 = %d \n", val1);
+	//printf("Integer Value2 = %d \n", val2);
 	
 	if(opt == 1)
 	{	
-		for(count=0;count<argc-1;count++)		
-			result = result + val[count];	
+		result = val1 + val2;	
 		integer2roman(result);
 	}
 	else if(opt == 2)
 	{
-		result = val[0];		
-		for(count=1;count<argc-1;count++)		
-			result = result - val[count];
-		
+		result = val1 - val2;
 		if(result == 0)
 			printf("The answer is Null \n");
 		else if(result < 0)
@@ -69,6 +65,7 @@ int main(int argc, char *argv[])
 			integer2roman(result);
 	}	
 	
+	//integer2roman(8);
 	return 0;
 }
 
