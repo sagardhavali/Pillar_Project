@@ -2,23 +2,29 @@
 #include <string.h>
 
 int roman2integer(char *, int);
+void integer2roman(int);
 int indexofletter(char);
+void postdigit(char, int);
+void predigit(char, char);
 
 char roman[] = "IVXLCDM";
 int decimal[] = {1,5,10,50,100,500,1000};
+char answer[1000]={0};
+int ind=0;
 
 int main(int argc, char *argv[])
 {
 	int opt=0, len1=0, len2=0;
-	int val1=0, val2=0;	
-	
+	int val1=0, val2=0;
+	int result=0;	
+	/*
 	if(argc < 3)
 	{
 		printf("Not enough inputs \n");
 		return -1;
 	}	
+	
 	printf("Welcome to Roman Calculator! \n");
-
 	printf("Enter the operation you wish to perform: \n");
 	printf("1. Addition \n");
 	printf("2. Subtraction \n");
@@ -41,14 +47,25 @@ int main(int argc, char *argv[])
 	val1 = roman2integer(argv[1],len1);
 	val2 = roman2integer(argv[2],len2);
 	printf("Integer Value1 = %d \n", val1);
-	printf("Integer Value2 = %d \n", val1);
+	printf("Integer Value2 = %d \n", val2);
 	
-	if(opt == 1)	
-		printf("Addition = %d \n", val1 + val2);	
+	if(opt == 1)
+	{	
+		result = val1 + val2;	
+		integer2roman(result);
+	}
 	else if(opt == 2)
-		printf("Subtraction = %d \n", val1 - val2);	
-	
-
+	{
+		result = val1 - val2;
+		if(result == 0)
+			printf("The answer is Null \n");
+		else if(result < 0)
+			printf("The answer is negative \n");
+		else
+			integer2roman(result);
+	}	
+	*/
+	integer2roman(8);
 	return 0;
 }
 
@@ -83,3 +100,114 @@ int indexofletter(char x)
 		}
 	return -1;
 }
+
+void integer2roman(int num)
+{
+	int i=0;
+
+	while(num != 0)
+	{
+		if(num >= 1000)
+		{
+			postdigit('M', num/1000);
+			num = num - (num/1000)*1000;
+		}
+		else if(num >= 500)
+		{
+			if(num < 900)
+			{
+				postdigit('D', num/500);
+				num = num - (num/500)*500;
+			}
+			else
+			{
+				predigit('C','M');
+				num = num - 900;
+			}
+		}
+		else if(num >= 100)
+		{
+			if(num < 400)
+			{
+				postdigit('C', num/100);
+				num = num - (num/100)*100;
+			}
+			else
+			{
+				predigit('L','D');
+				num = num - 400;
+			}
+		}
+		else if(num >= 50)
+		{
+			if(num < 90)
+			{
+				postdigit('L', num/50);
+				num = num - (num/50)*50;
+			}
+			else
+			{
+				predigit('X','C');
+				num = num - 90;
+			}
+		}
+		else if(num >= 10)
+		{
+			if(num < 40)
+			{
+				postdigit('X', num/10);
+				num = num - (num/10)*10;
+			}
+			else
+			{
+				predigit('X','L');
+				num = num - 40;
+			}
+		}
+		else if(num >= 5)
+		{
+			if(num < 9)
+			{
+				postdigit('V', num/5);
+				num = num - (num/5)*5;
+			}
+			else
+			{
+				predigit('I','X');
+				num = num - 9;
+			}
+		}
+		else if(num >= 1)
+		{
+			if(num < 4)
+			{
+				postdigit('I', num/1);
+				num = num - (num/1)*1;
+			}
+			else
+			{
+				predigit('I','V');
+				num = num - 4;
+			}
+		}
+	}
+
+	printf("Roman Number is: ");
+	for(i=0;i<ind;i++)
+		printf("%c", answer[i]);
+	printf("\n");
+}
+
+void postdigit(char c, int n)
+{
+	int i=0;
+	for(i=0;i<n;i++)
+		answer[ind++] = c;
+}
+
+void predigit(char num1, char num2)
+{
+	answer[ind++] = num1;
+	answer[ind++] = num2;
+}
+
