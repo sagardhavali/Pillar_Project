@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	int opt=0, len1=0, len2=0;
 	int val1=0, val2=0;
 	int result=0;	
-	/*
+	
 	if(argc < 3)
 	{
 		printf("Not enough inputs \n");
@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
 
 	val1 = roman2integer(argv[1],len1);
 	val2 = roman2integer(argv[2],len2);
-	printf("Integer Value1 = %d \n", val1);
-	printf("Integer Value2 = %d \n", val2);
+	//printf("Integer Value1 = %d \n", val1);
+	//printf("Integer Value2 = %d \n", val2);
 	
 	if(opt == 1)
 	{	
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
 		else
 			integer2roman(result);
 	}	
-	*/
-	integer2roman(8);
+	
+	//integer2roman(8);
 	return 0;
 }
 
