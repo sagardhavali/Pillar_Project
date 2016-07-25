@@ -323,6 +323,9 @@ bool isvalidroman(char *str)
 							return false;				
 						if(indexofletter(str[2]) >= indexofletter(str[0]))
 							return false;
+						for(i=2;i<len;i++)
+							if(indexofletter(str[i]) >= indexofletter(str[0]))
+								return false;
 					}
 					else
 						return true;
