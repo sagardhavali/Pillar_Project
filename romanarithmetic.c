@@ -66,7 +66,22 @@ int main(int argc, char *argv[])
 			if(valid[count])			
 				result = result + val[count];	
 		}
-		integer2roman(result);
+		if(result)		
+		{
+			//printf("Answer in decimal = %d \n", result);
+			if(result < 5000)
+				integer2roman(result);
+			else
+			{
+				printf("The result cannot be displayed in Roman Numeral.\n");
+				return 1;
+			}
+		}
+		else
+		{
+			printf("Not enough valid operands. \n");
+			return 1;
+		}
 	}
 	else if(opt == 2)
 	{
@@ -84,11 +99,20 @@ int main(int argc, char *argv[])
 				result = result - val[count];
 		}
 		if(result == 0)
-			printf("The answer is Null \n");
+		{
+			printf("The answer is NULL. \n");
+			return 1;
+		}
 		else if(result < 0)
-			printf("The answer is negative \n");
+		{
+			printf("The answer is negative. \n");
+			return 1;
+		}
 		else
+		{
+			//printf("Answer in decimal = %d \n", result);
 			integer2roman(result); 
+		}
 	}	
 	
 	return 0;
@@ -159,7 +183,7 @@ void integer2roman(int num)
 			}
 			else
 			{
-				predigit('L','D');
+				predigit('C','D');
 				num = num - 400;
 			}
 		}
@@ -241,6 +265,8 @@ bool isvalidroman(char *str)
 	int len = strlen(str);
 	int i=0, prev=0, pres=0, count=0;
 	int first_M = 0;
+	char temp[len-1];
+	int temp_len=0;
 
 	if(str[0] == 'M')
 		first_M = 1;
@@ -277,6 +303,59 @@ bool isvalidroman(char *str)
 		if(pres > prev && count == 1)
 			return false;	
 	}
+
+	prev = 0;
+	pres = 0;
+	switch(str[0])
+	{
+		case 'I' :	if(len == 2 && (indexofletter(str[1]) > (indexofletter(str[0])+2)))
+						return false;					
+					else if(len > 2 && (indexofletter(str[2]) >= indexofletter(str[0])))
+						return false;
+					else
+						return true;
+
+		case 'X' :	if(len == 2 && (indexofletter(str[1]) > (indexofletter(str[0])+2)))
+						return false;
+					else if(len > 2)
+					{						
+						if(str[1] == 'D' || str[1] == 'M')
+							return false;				
+						if(indexofletter(str[2]) >= indexofletter(str[0]))
+							return false;
+					}
+					else
+						return true;
+
+		case 'C' :	if(len == 2 && (indexofletter(str[1]) > (indexofletter(str[0])+2)))
+						return false;
+					else if(len > 2 && (indexofletter(str[2]) >= indexofletter(str[0])))
+						return false;
+					else
+						return true;
+
+		case 'V' :	for(i=1;i<len;i++)
+						if(indexofletter(str[i]) >= indexofletter(str[0]))
+							return false;		
+					return true;
+
+		case 'L' :	for(i=1;i<len;i++)
+						if(indexofletter(str[i]) >= indexofletter(str[0]))
+							return false;
+					if(len > 3 && (indexofletter(str[3]) >= indexofletter(str[1])))
+						return false;
+					strncpy(temp,str+1,len-1);
+					temp[len-1] = '\0';					
+					return isvalidroman(temp);
+
+		case 'D' :	strncpy(temp,str+1,len-1);
+					temp[len-1] = '\0';					
+					return isvalidroman(temp);
+
+		case 'M' : break;
+	
+	
+	}	
 	
 	return true;
 }

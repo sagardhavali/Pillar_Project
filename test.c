@@ -20,13 +20,13 @@ int main(int argc, char *argv[])
 	int val1=0, val2=0;
 	int result=0;	
 	
-	if(isvalidroman(argv[1]))	
+	/*if(isvalidroman(argv[1]))	
 		printf("Entered	roman number is valid \n");
 	else
 		printf("Entered roman number is INVALID \n");
 	printf("Integer Value = %d \n", roman2integer(argv[1],strlen(argv[1])));
 	
-	/*if(argc < 3)
+	if(argc < 3)
 	{
 		printf("Not enough inputs \n");
 		return -1;
@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
 			printf("The answer is negative \n");
 		else
 			integer2roman(result);
-	}	
+	}	*/
 	
-	integer2roman(8); */
+	integer2roman(13); 
 	return 0;
 }
 
@@ -142,7 +142,7 @@ void integer2roman(int num)
 			}
 			else
 			{
-				predigit('L','D');
+				predigit('C','D');
 				num = num - 400;
 			}
 		}
