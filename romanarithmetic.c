@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 				integer2roman(result);
 			else
 			{
-				printf("The result cannot be displayed in Roman Numeral.\n");
+				printf("The result is more than 4999 and cannot be displayed in Roman Numeral.\n");
 				return 1;
 			}
 		}
@@ -352,7 +352,20 @@ bool isvalidroman(char *str)
 					temp[len-1] = '\0';					
 					return isvalidroman(temp);
 
-		case 'M' : break;
+		case 'M' : 	count = 1;
+					for(i=1;i<len;i++)
+					{
+						if(str[i-1] == str[i])
+							count++;
+						else
+							count = 1;
+						if(count > 4)
+							return false;
+					}
+					strncpy(temp,str+1,len-1);
+					temp[len-1] = '\0';					
+					return isvalidroman(temp);
+					break;
 	
 	
 	}	
