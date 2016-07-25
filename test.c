@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 int roman2integer(char *, int);
 void integer2roman(int);
+bool isvalidroman(char *str);
 int indexofletter(char);
 void postdigit(char, int);
 void predigit(char, char);
@@ -18,7 +20,13 @@ int main(int argc, char *argv[])
 	int val1=0, val2=0;
 	int result=0;	
 	
-	if(argc < 3)
+	if(isvalidroman(argv[1]))	
+		printf("Entered	roman number is valid \n");
+	else
+		printf("Entered roman number is INVALID \n");
+	printf("Integer Value = %d \n", roman2integer(argv[1],strlen(argv[1])));
+	
+	/*if(argc < 3)
 	{
 		printf("Not enough inputs \n");
 		return -1;
@@ -46,8 +54,8 @@ int main(int argc, char *argv[])
 
 	val1 = roman2integer(argv[1],len1);
 	val2 = roman2integer(argv[2],len2);
-	//printf("Integer Value1 = %d \n", val1);
-	//printf("Integer Value2 = %d \n", val2);
+	printf("Integer Value1 = %d \n", val1);
+	printf("Integer Value2 = %d \n", val2);
 	
 	if(opt == 1)
 	{	
@@ -65,7 +73,7 @@ int main(int argc, char *argv[])
 			integer2roman(result);
 	}	
 	
-	//integer2roman(8);
+	integer2roman(8); */
 	return 0;
 }
 
@@ -209,5 +217,50 @@ void predigit(char num1, char num2)
 {
 	answer[ind++] = num1;
 	answer[ind++] = num2;
+}
+
+bool isvalidroman(char *str)
+{
+	int len = strlen(str);
+	int i=0, prev=0, pres=0, count=0;
+	int first_M = 0;
+
+	if(str[0] == 'M')
+		first_M = 1;
+	else
+		first_M = 0;
+
+	for(i=0;i<len;i++)
+	{
+		pres = indexofletter(str[i]);
+		if(pres == -1)
+			return false;
+		count++;
+		if(prev == pres)
+		{
+			if(pres%2 == 1)
+				return false;
+			if(pres%2 == 0 && count == 2 && str[i] == 'M' && first_M == 0)
+				return false;
+		}
+		else
+			count = 1;
+		if(count >3 && str[i] != 'M')
+			return false;		
+		prev = pres;
+	}
+		
+	prev = indexofletter(str[0]);
+	count = 0;
+	for(i=1;i<len;i++)
+	{
+		pres = indexofletter(str[i]);
+		if(pres == prev)
+			count++;
+		if(pres > prev && count == 1)
+			return false;	
+	}
+	
+	return true;
 }
 
